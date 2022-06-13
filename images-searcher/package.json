@@ -1,0 +1,52 @@
+{
+  "$schema": "https://www.raycast.com/schemas/extension.json",
+  "name": "images-searcher",
+  "title": "Images searcher",
+  "description": "Search images in a specified folder",
+  "icon": "command-icon.png",
+  "author": "eramdam",
+  "license": "MIT",
+  "commands": [
+    {
+      "name": "index",
+      "title": "Show List",
+      "description": "Template for showing a static list",
+      "mode": "view"
+    }
+  ],
+  "preferences": [
+    {
+      "name": "folder",
+      "title": "Images folder",
+      "description": "Where your images are located",
+      "required": true,
+      "type": "textfield",
+      "default": "~/Pictures",
+      "placeholder": "~/Pictures"
+    }
+  ],
+  "dependencies": {
+    "@raycast/api": "^1.36.0",
+    "@types/lodash": "^4.14.182",
+    "fuse.js": "^6.6.2",
+    "lodash": "^4.17.21",
+    "run-applescript": "^6.0.0",
+    "tiny-glob": "^0.2.9"
+  },
+  "devDependencies": {
+    "@types/node": "~16.10.0",
+    "@types/react": "^17.0.28",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^5.0.0",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "prettier": "^2.5.1",
+    "typescript": "^4.4.3"
+  },
+  "scripts": {
+    "build": "ray build -e dist",
+    "dev": "ray develop",
+    "fix-lint": "ray lint --fix",
+    "lint": "ray lint"
+  }
+}
