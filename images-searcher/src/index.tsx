@@ -30,9 +30,9 @@ export default function Command() {
 
   const searchItems = useRef<Fuse<Item>>(
     new Fuse([], {
-      threshold: 0.4,
+      minMatchCharLength: 2,
       includeScore: true,
-      keys: ["keywords", "filename", "id"],
+      keys: ["keywords"],
     })
   );
 
@@ -68,7 +68,6 @@ export default function Command() {
     if (searchText.trim()) {
       return _(searchItems.current.search(searchText.trim()))
         .uniqBy((r) => r.item.id)
-        .sortBy((r) => r.refIndex)
         .map((r) => r.item)
         .value();
     }
@@ -93,7 +92,7 @@ export default function Command() {
                     runAppleScript(`set the clipboard to POSIX file "${item.path}"`).then(() => {
                       popToRoot();
                       closeMainWindow();
-                      showHUD("Copied image to clipboard");
+                      showHUD("Copied meme to clipboard");
                     });
                   }}
                   icon={Icon.Clipboard}
