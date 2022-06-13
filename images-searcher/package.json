@@ -1,16 +1,16 @@
 {
   "$schema": "https://www.raycast.com/schemas/extension.json",
-  "name": "images-searcher",
+  "name": "memes-searcher",
   "title": "Images searcher",
-  "description": "Search images in a specified folder",
+  "description": "Search memes in a specified folder",
   "icon": "command-icon.png",
   "author": "eramdam",
   "license": "MIT",
   "commands": [
     {
       "name": "index",
-      "title": "Show List",
-      "description": "Template for showing a static list",
+      "title": "Search memes",
+      "description": "Search memes",
       "mode": "view"
     }
   ],
@@ -18,7 +18,7 @@
     {
       "name": "folder",
       "title": "Images folder",
-      "description": "Where your images are located",
+      "description": "Where your memes are located",
       "required": true,
       "type": "textfield",
       "default": "~/Pictures",
