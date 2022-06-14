@@ -1,15 +1,16 @@
 {
   "$schema": "https://www.raycast.com/schemas/extension.json",
   "name": "memes-searcher",
-  "title": "Images searcher",
+  "title": "Memes Searcher",
   "description": "Search memes in a specified folder",
   "icon": "command-icon.png",
+  "owner": "dmn",
   "author": "eramdam",
   "license": "MIT",
   "commands": [
     {
       "name": "index",
-      "title": "Search memes",
+      "title": "Search Memes",
       "description": "Search memes",
       "mode": "view"
     }
