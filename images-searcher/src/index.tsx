@@ -17,11 +17,14 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { runAppleScript } from "run-applescript";
 import glob from "tiny-glob";
 
+const extensions = ["png", "gif", "jpeg", "jpg"] as const;
+
 interface Item {
   id: string;
   filename: string;
   path: string;
   keywords: string[];
+  extension: typeof extensions[number];
 }
 
 export default function Command() {
@@ -40,7 +43,7 @@ export default function Command() {
     const { folder } = getPreferenceValues();
     const home = os.homedir();
     const normalizedPath = String(folder).replace(/^~/, home);
-    glob("*.{png,gif,jpeg,jpg,webp}", {
+    glob(`*.{${extensions.join(",")}}`, {
       cwd: normalizedPath,
       absolute: true,
     }).then((files) => {
@@ -48,6 +51,7 @@ export default function Command() {
         return {
           id: f,
           path: f,
+          extension: path.extname(f).replace(/^\./, "").toLowerCase() as typeof extensions[number],
           filename: path.basename(f),
           keywords: path
             .basename(f, f.split(".").pop())
@@ -86,19 +90,23 @@ export default function Command() {
             keywords={item.keywords}
             actions={
               <ActionPanel>
-                <Action
-                  title="Copy to clipboard"
-                  onAction={() => {
-                    runAppleScript(`set the clipboard to POSIX file "${item.path}"`).then(() => {
-                      popToRoot();
-                      closeMainWindow();
-                      showHUD("Copied meme to clipboard");
-                    });
-                  }}
-                  icon={Icon.Clipboard}
-                ></Action>
-                <Action.Open title="Open" target={item.path} />
+                {item.extension !== "gif" && (
+                  <Action
+                    title="Copy to clipboard"
+                    onAction={() => {
+                      runAppleScript(`set the clipboard to (read (POSIX file "${item.path}") as TIFF picture)`).then(
+                        () => {
+                          popToRoot();
+                          closeMainWindow();
+                          showHUD(`Copied ${item.filename} to clipboard`);
+                        }
+                      );
+                    }}
+                    icon={Icon.Clipboard}
+                  ></Action>
+                )}
                 <Action.ShowInFinder path={item.path} />
+                <Action.Open title="Open" target={item.path} />
               </ActionPanel>
             }
           />
