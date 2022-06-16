@@ -43,7 +43,7 @@ export default function Command() {
     const { folder } = getPreferenceValues();
     const home = os.homedir();
     const normalizedPath = String(folder).replace(/^~/, home);
-    glob(`*.{${extensions.join(",")}}`, {
+    glob(`*.{${[...extensions, ...extensions.map((i) => i.toUpperCase())].join(",")}}`, {
       cwd: normalizedPath,
       absolute: true,
     }).then((files) => {
