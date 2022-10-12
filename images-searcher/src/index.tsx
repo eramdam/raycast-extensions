@@ -35,7 +35,8 @@ export default function Command() {
     new Fuse([], {
       minMatchCharLength: 2,
       includeScore: true,
-      keys: ["keywords"],
+      isCaseSensitive: false,
+      keys: ["keywords", "title"],
     })
   );
 
@@ -53,8 +54,9 @@ export default function Command() {
           path: f,
           extension: path.extname(f).replace(/^\./, "").toLowerCase() as typeof extensions[number],
           filename: path.basename(f),
+          title: path.basename(f).toLowerCase(),
           keywords: path
-            .basename(f, f.split(".").pop())
+            .basename(f.toLowerCase(), f.split(".").pop())
             .split(/[^a-z0-9]/i)
             .filter((i) => !!i),
         };
@@ -70,8 +72,7 @@ export default function Command() {
 
   const filteredItems = useMemo(() => {
     if (searchText.trim()) {
-      return _(searchItems.current.search(searchText.trim()))
-        .uniqBy((r) => r.item.id)
+      return _(searchItems.current.search(searchText.toLowerCase().trim()))
         .map((r) => r.item)
         .value();
     }
